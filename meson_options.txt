@@ -1,0 +1,81 @@
+# ffmpeg options
+# Minimal set of elements for rtsp => rtmp restreaming
+# Only h264 + aac, other codecs need to be added
+option('custom_components_list', type: 'array',
+    value: ['aac_adtstoasc_bsf', 'h264_metadata_bsf',
+            'h264_mp4toannexb_bsf', 'h264_redundant_pps_bsf',
+            'rtp_muxer', 'rtp_protocol',
+            'flv_muxer', 'h264_parser',
+            'h264_muxer', 'segment_muxer',
+            'h264_demuxer', 'rtsp_protocol',
+            'rtsp_demuxer', 'aac_fixed_decoder',
+            'aac_parser', 'adts_muxer',
+            'flv_encoder', 'tcp_protocol',
+            'udp_protocol', 'file_protocol',
+            'h264_decoder', 'mp4_muxer',
+            'flv_demuxer', 'pcm_mulaw',
+            'flv_decoder', 'http_protocol',
+            'pcm_s8_muxer', 'sdp_demuxer',
+            'async_protocol', 'dhav_demuxer',
+            'pcm_alaw', 'alaw', 'mulaw'], yield : true)
+
+# openssl has Apache license only for the git master branch and all releases since 3.0+
+# ffmpeg disables openssl support if gpl and nonfree flags disabled
+# Axis provides openssl in SDK so we enabled ffmpeg openssl support
+# by enabling gpl and nonfree options
+option('gpl', type: 'feature', value: 'disabled',
+  description: 'Allow ffmpeg use of GPL code, the resulting libs and binaries will be under GPL', yield : true)
+option('nonfree', type: 'feature', value: 'disabled',
+  description: 'Allow ffmpeg use of nonfree code, the resulting libs and binaries will be unredistributable', yield : true)
+option('openssl', type: 'feature', value: 'disabled', yield : true)
+option('librtmp', type: 'feature', value: 'disabled', yield : true)
+
+# libwebsockets options, openssl and lws crypto api
+option('LWS_WITH_GENCRYPTO', type: 'boolean', value: false, yield : true,
+  description: 'Enable support for Generic Crypto apis independent of TLS backend')
+option('LWS_WITH_OPENSSL', type: 'boolean', value: false, yield : true,
+  description: 'Include OpenSSL support')
+# OPENSSL CA certs bundle path
+option('LWS_OPENSSL_CLIENT_CERTS', type: 'string', value: '/etc/ssl/certs/', yield : true,
+  description: 'OpenSSL SSL CA certs path. [default=/etc/ssl/certs/]')
+option('LWS_WITH_TLS', type: 'boolean', value: false, yield : true,
+  description: 'Include TLS support')
+option('LWS_WITH_SSL', type: 'boolean', value: false, yield : true,
+  description: 'Include SSL support (defaults to OpenSSL or similar, mbedTLS if LWS_WITH_MBEDTLS is set)')
+option('LWS_WITH_SOCKS5', type: 'boolean', value: false, yield : true,
+  description: 'Allow use of SOCKS5 proxy on client connections')
+# vxg core lib options
+option('ffmpeg', type : 'feature', value : 'enabled', yield : true)
+option('streamer_test', type : 'feature', value : 'enabled', yield : true)
+option('props_file_path', type: 'string', value: '/tmp/.props', yield : true,
+        description: 'File where properties will be storred')
+
+# Some cross compilation toolchains have no backtrace() function,
+# this option should be used to specify custom subproject with
+# backtrace() implementation.
+# If it's empty the backtrace() will not be used
+option('backtrace_lib', type: 'string', value: '', yield : true,
+        description: 'Backtrace lib, used only for cross-compilation')
+
+option('documentation',
+       type: 'boolean',
+       value: false, yield : true,
+       description: 'Build the documentation [default=false]')
+
+# Access token fields default values, used if the field is ommited in the access token.
+option('DEFAULT_CLOUD_TOKEN_API', type: 'string', value: 'web.skyvr.videoexpertsgroup.com', description: 'api', yield : true)
+option('DEFAULT_CLOUD_TOKEN_API_P', type: 'integer', value: 80, description: 'api_p', yield : true)
+option('DEFAULT_CLOUD_TOKEN_API_SP', type: 'integer', value: 443, description: 'api_sp', yield : true)
+option('DEFAULT_CLOUD_TOKEN_CAM', type: 'string', value: 'cam.skyvr.videoexpertsgroup.com', description: 'cam', yield : true)
+option('DEFAULT_CLOUD_TOKEN_CAM_P', type: 'integer', value: 8888, description: 'cam_p', yield : true)
+option('DEFAULT_CLOUD_TOKEN_CAM_SP', type: 'integer', value: 8883, description: 'cam_sp', yield : true)
+
+#
+# Security settings for TLS
+#
+
+# OPENSSL allowed ciphers list, used for https and secure websockets.
+option('OPENSSL_CIPHERS_LIST', type: 'string', value: '!RC4:!MD5:AES128-SHA:AES256-SHA:HIGH:!DSS:!aNULL', yield : true)
+# Don't validate server SSL certificates
+option('SSL_ALLOW_INSECURE_CERTS', type: 'boolean', value: false, yield : true)
+

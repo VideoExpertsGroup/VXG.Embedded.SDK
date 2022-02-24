@@ -1,0 +1,11 @@
+[wrap-git]
+url=https://github.com/warmcat/libwebsockets.git
+revision=87f06b3dbc9a9c8e1ea6b41f1e23d25802398e98
+
+patch_directory  = libwebsockets
+
+depth=1
+
+[provide]
+dependency_names = libwebsockets
+libwebsockets = libwebsockets_dep
