@@ -1,0 +1,3 @@
+option('crypto_backend', type : 'combo',
+    choices : ['openssl', 'embedtls', 'gcrypt'], value : 'openssl',
+    yield: true)
