@@ -1,0 +1,8 @@
+[wrap-git]
+url=https://github.com/aws/aws-sdk-cpp.git
+revision=1.9.151
+depth=1
+clone-recursive=true
+
+[provide]
+dependency_names = aws-cpp-sdk-s3
