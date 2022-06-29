@@ -1,0 +1,8 @@
+[wrap-git]
+url = https://git.ffmpeg.org/rtmpdump.git
+revision = c5f04a58fc2aeea6296ca7c44ee4734c18401aa3
+directory = librtmp
+patch_directory = librtmp
+
+[provide]
+librtmp = librtmp_dep
