@@ -1,0 +1,65 @@
+# ffmpeg options
+# Minimal set of elements for rtsp => rtmp restreaming
+# Only h264 + aac, other codecs need to be added
+option('custom_components_list', type: 'array',
+    value: ['aac_adtstoasc_bsf', 'h264_metadata_bsf',
+            'h264_mp4toannexb_bsf', 'h264_redundant_pps_bsf',
+            'rtp_muxer', 'rtp_protocol',
+            'flv_muxer', 'h264_parser', 'h264_muxer',
+            'h264_demuxer', 'rtsp_protocol',
+            'rtsp_demuxer', 'aac_fixed_decoder',
+            'aac_parser', 'adts_muxer',
+            'flv_encoder', 'tcp_protocol',
+            'udp_protocol', 'file_protocol',
+            'h264_decoder', 'mp4_muxer',
+            'flv_demuxer', 'pcm_mulaw',
+            'flv_decoder', 'http_protocol',
+            'pcm_s8_muxer','async_protocol'])
+
+option('gpl', type: 'feature', value: 'enabled',
+  description: 'Allow ffmpeg use of GPL code, the resulting libs and binaries will be under GPL')
+option('nonfree', type: 'feature', value: 'enabled',
+  description: 'Allow ffmpeg use of nonfree code, the resulting libs and binaries will be unredistributable')
+option('openssl', type: 'feature', value: 'enabled')
+option('librtmp', type: 'feature', value: 'disabled')
+
+# libwebsockets options, openssl and lws crypto api
+option('LWS_WITH_GENCRYPTO', type: 'boolean', value: true,
+  description: 'Enable support for Generic Crypto apis independent of TLS backend')
+option('LWS_WITH_OPENSSL', type: 'boolean', value: true,
+  description: 'Include OpenSSL support')
+# OPENSSL CA certs bundle path
+option('LWS_OPENSSL_CLIENT_CERTS', type: 'string', value: '/etc/ssl/certs/',
+  description: 'OpenSSL SSL CA certs path. [default=/etc/ssl/certs/]')
+option('LWS_WITH_TLS', type: 'boolean', value: true,
+  description: 'Include TLS support')
+option('LWS_WITH_SSL', type: 'boolean', value: true,
+  description: 'Include SSL support (defaults to OpenSSL or similar, mbedTLS if LWS_WITH_MBEDTLS is set)')
+option('LWS_WITH_SOCKS5', type: 'boolean', value: true,
+  description: 'Allow use of SOCKS5 proxy on client connections')
+
+# Some cross compilation toolchains have no backtrace functionality,
+# this option should be used to specify custom subproject with
+# backtrace() implementation.
+# vxgcloudagent lib provides libubacktrace backtrace() implementation.
+# Set value to libubacktrace if you beleive that your platform has no
+# backtrace().
+option('backtrace_lib', type: 'string', value: '',
+        description: 'Backtrace lib, used only for cross-compilation')
+
+# Access token fields default values, used if the field is ommited in the access token.
+option('DEFAULT_CLOUD_TOKEN_API', type: 'string', value: 'web.skyvr.videoexpertsgroup.com', description: 'api')
+option('DEFAULT_CLOUD_TOKEN_API_P', type: 'integer', value: 80, description: 'api_p')
+option('DEFAULT_CLOUD_TOKEN_API_SP', type: 'integer', value: 443, description: 'api_sp')
+option('DEFAULT_CLOUD_TOKEN_CAM', type: 'string', value: 'cam.skyvr.videoexpertsgroup.com', description: 'cam')
+option('DEFAULT_CLOUD_TOKEN_CAM_P', type: 'integer', value: 8888, description: 'cam_p')
+option('DEFAULT_CLOUD_TOKEN_CAM_SP', type: 'integer', value: 8883, description: 'cam_sp')
+
+#
+# Security settings for TLS
+#
+
+# OPENSSL allowed ciphers list, used for https and secure websockets.
+option('OPENSSL_CIPHERS_LIST', type: 'string', value: '!RC4:!MD5:AES128-SHA:AES256-SHA:HIGH:!DSS:!aNULL')
+# Don't validate server SSL certificates
+option('SSL_ALLOW_INSECURE_CERTS', type: 'boolean', value: true)

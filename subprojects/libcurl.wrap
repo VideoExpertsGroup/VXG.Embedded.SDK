@@ -1,0 +1,8 @@
+[wrap-git]
+url=https://github.com/curl/curl.git
+revision=curl-7_80_0
+depth=1
+clone-recursive=true
+
+[provide]
+dependency_names = curl
