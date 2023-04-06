@@ -1,0 +1,2 @@
+option('ONLY_C_LOCALE', type: 'feature', value: 'disabled',
+  description: 'Use only C locale, disables usage of g++5.x only time facets')
